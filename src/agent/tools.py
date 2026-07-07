@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
@@ -14,7 +15,7 @@ def clean_text(text: str, max_length: int = 300) -> str:
 
 @tool
 def search_medical_info(query: str) -> str:
-    """의료 통계 문서에서 관련 정보를 검색합니다. 지역별 건강 통계, 유병률 등을 검색할 때 사용하세요."""
+    """지역 건강 통계 문서에서 관련 정보를 검색합니다. 지역별 건강 통계, 유병률 등을 검색할 때 사용하세요."""
     try:
         vectorstore = load_vectorstore()
         retriever = vectorstore.as_retriever(
