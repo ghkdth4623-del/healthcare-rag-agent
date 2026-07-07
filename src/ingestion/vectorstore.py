@@ -5,8 +5,8 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 
 def split_text(text: str):
     splitter = RecursiveCharacterTextSplitter(
-        chunk_size=500,
-        chunk_overlap=50
+        chunk_size=1000,
+        chunk_overlap=200
     )
     chunks = splitter.split_text(text)
     print(f"청크 수: {len(chunks)}개")
