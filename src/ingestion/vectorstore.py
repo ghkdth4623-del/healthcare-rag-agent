@@ -30,3 +30,10 @@ def load_vectorstore(save_path: str = "data/processed/faiss_index"):
         save_path, embeddings,
         allow_dangerous_deserialization=True
     )
+
+if __name__ == "__main__":
+    from pdf_loader import load_all_pdfs
+    text = load_all_pdfs()
+    chunks = split_text(text)
+    save_vectorstore(chunks)
+    print("완료!")
