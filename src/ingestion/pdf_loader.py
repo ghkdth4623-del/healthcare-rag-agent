@@ -2,7 +2,6 @@ import os
 import pdfplumber
 
 def load_pdf(file_path: str) -> str:
-    """PDF에서 텍스트 추출"""
     text = ""
     with pdfplumber.open(file_path) as pdf:
         print(f"총 페이지 수: {len(pdf.pages)}")
@@ -10,11 +9,26 @@ def load_pdf(file_path: str) -> str:
             extracted = page.extract_text()
             if extracted:
                 text += extracted + "\n"
+
+            tables = page.extract_tables()
+            for table in tables:
+                if not table or len(table) < 2:
+                    continue
+                header = table[0]
+                for row in table[1:]:
+                    if not row:
+                        continue
+                    row_texts = []
+                    for i, cell in enumerate(row):
+                        if cell and i < len(header) and header[i]:
+                            row_texts.append(f"{header[i]}:{cell}")
+                    if row_texts:
+                        text += " | ".join(row_texts) + "\n"
+
     print(f"추출된 텍스트 길이: {len(text)}자")
     return text
 
 def load_all_pdfs(folder_path: str = "data/raw") -> str:
-    """폴더 안의 모든 PDF 불러오기"""
     full_text = ""
     for file in os.listdir(folder_path):
         if file.endswith(".pdf"):
@@ -25,4 +39,4 @@ def load_all_pdfs(folder_path: str = "data/raw") -> str:
 
 if __name__ == "__main__":
     text = load_all_pdfs()
-    print(text[:300])
+    print(text[:500])
