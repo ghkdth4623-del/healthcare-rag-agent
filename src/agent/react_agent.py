@@ -23,13 +23,14 @@ from langchain_core.messages import SystemMessage
 
 def build_agent():
     llm = ChatGroq(
-        model="llama-3.1-8b-instant",
+        model="llama-3.3-70b-versatile",
         api_key=os.getenv("GROQ_API_KEY"),
-        temperature=0
+        temperature=0.2
     )
     agent = create_react_agent(
         llm,
         [search_medical_info],
+        prompt=SYSTEM_PROMPT,
     )
     return agent
 

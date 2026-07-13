@@ -6,7 +6,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from langchain.tools import tool
 from ingestion.vectorstore import load_vectorstore
 
-def clean_text(text: str, max_length: int = 150) -> str:
+def clean_text(text: str, max_length: int = 800) -> str:
     import re
     text = re.sub(r'\s+', ' ', text).strip()
     if len(text) > max_length:
@@ -20,12 +20,12 @@ def search_medical_info(query: str) -> str:
         vectorstore = load_vectorstore()
         retriever = vectorstore.as_retriever(
             search_type="mmr",
-            search_kwargs={"k": 2, "fetch_k": 4}
+            search_kwargs={"k": 4, "fetch_k": 8}
         )
         docs = retriever.invoke(query)
         if not docs:
             return "관련 정보를 찾을 수 없습니다."
-        results = [clean_text(doc.page_content, max_length=200) for doc in docs]
+        results = [clean_text(doc.page_content, max_length=800) for doc in docs]
         return "\n\n".join(results)
     except Exception as e:
         return f"검색 오류: {e}"
