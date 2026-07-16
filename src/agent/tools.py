@@ -15,17 +15,17 @@ def clean_text(text: str, max_length: int = 800) -> str:
 
 @tool
 def search_medical_info(query: str) -> str:
-    """지역 건강 통계 문서에서 관련 정보를 검색합니다. 지역별 건강 통계, 유병률 등을 검색할 때 사용하세요."""
+    """지역 건강 통계 문서에서 관련 정보를 검색합니다."""
     try:
         vectorstore = load_vectorstore()
         retriever = vectorstore.as_retriever(
             search_type="mmr",
-            search_kwargs={"k": 4, "fetch_k": 8}
+            search_kwargs={"k": 5, "fetch_k": 10}
         )
         docs = retriever.invoke(query)
         if not docs:
             return "관련 정보를 찾을 수 없습니다."
-        results = [clean_text(doc.page_content, max_length=800) for doc in docs]
+        results = [clean_text(doc.page_content, max_length=1000) for doc in docs]
         return "\n\n".join(results)
     except Exception as e:
         return f"검색 오류: {e}"

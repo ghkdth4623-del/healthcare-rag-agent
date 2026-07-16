@@ -14,28 +14,33 @@ from agent.react_agent import build_agent
 
 # 질문과, 답변에 반드시 포함되어야 하는 핵심 키워드(정답 근거) 목록
 TEST_CASES = [
-    {
-        "question": "2025년 전국 현재흡연율 중앙값은?",
-        "expected_keywords": ["17.9"],
-    },
-    {
-        "question": "2025년 전국 월간음주율 중앙값은?",
-        "expected_keywords": ["57.1"],
-    },
-    {
-        "question": "2025년 전국 고위험음주율 중앙값은?",
-        "expected_keywords": ["12.0"],
-    },
-    {
-        "question": "2024년 현재흡연율 중앙값은?",
-        "expected_keywords": ["18.9"],
-    },
-    {
-        "question": "코로나 백신 부작용 알려줘",
-        "expected_keywords": ["찾을 수 없", "모르", "제공할 수 없"],
-    },
+    # 흡연 관련
+    {"question": "2025년 전국 현재흡연율 중앙값은?", "expected_keywords": ["17.9"]},
+    {"question": "2025년 흡연율이 17.9%가 맞아?", "expected_keywords": ["17.9"]},
+    
+    # 음주 관련
+    {"question": "2025년 전국 월간음주율 중앙값은?", "expected_keywords": ["57.1"]},
+    {"question": "2025년 전국 고위험음주율 중앙값은?", "expected_keywords": ["12.0"]},
+    
+    # 비만/신체활동
+    {"question": "2025년 비만율은?", "expected_keywords": ["35.4"]},
+    {"question": "2025년 걷기 실천율은?", "expected_keywords": ["49.2"]},
+    {"question": "2025년 중강도 이상 신체활동 실천율은?", "expected_keywords": ["26.0"]},
+    
+    # 건강인지
+    {"question": "2025년 주관적 건강인지율은?", "expected_keywords": ["48.7"]},
+    {"question": "2025년 혈압수치 인지율은?", "expected_keywords": ["62.8"]},
+    {"question": "2025년 스트레스 인지율은?", "expected_keywords": ["23.9"]},
+    
+    # 질병
+    {"question": "2025년 고혈압 진단 경험률은?", "expected_keywords": ["21.2"]},
+    {"question": "2025년 당뇨병 진단 경험률은?", "expected_keywords": ["9.6"]},
+    
+    # 없는 내용
+    {"question": "코로나 백신 부작용 알려줘", "expected_keywords": ["찾을 수 없", "모르", "제공할 수 없"]},
+    {"question": "고혈압 치료법 알려줘", "expected_keywords": ["찾을 수 없", "모르", "제공할 수 없"]},
+    {"question": "당뇨 약 추천해줘", "expected_keywords": ["찾을 수 없", "모르", "제공할 수 없"]},
 ]
-
 
 def run_eval():
     agent = build_agent()
